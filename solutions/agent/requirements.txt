@@ -1,0 +1,15 @@
+# ADK core (Agent Development Kit)
+google-adk>=1.33.0,<2.0.0
+
+# Google Cloud auth + BigQuery (used by BigQueryToolset and FunctionTools)
+google-auth>=2.52.0
+google-cloud-bigquery>=3.41.0
+
+# HTTP client for the MLB Stats API FunctionTool
+requests>=2.33.0
+
+# Pydantic — used by ADK and our typed tool inputs/outputs
+pydantic>=2.13.0,<3.0.0
+
+# Loads .env into the process environment for local development
+python-dotenv>=1.2.0
