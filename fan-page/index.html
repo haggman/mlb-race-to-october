@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Race to October — Your Team. Your Season.</title>
+
+  <!-- ================================================== -->
+  <!-- PASTE CX AGENT STUDIO HEAD SNIPPET BELOW HERE      -->
+  <!--                                                    -->
+  <!-- This is the FIRST of two paste points. The CX      -->
+  <!-- Studio console gives you a <script> tag, one or    -->
+  <!-- two <link rel="stylesheet"> tags, and an optional  -->
+  <!-- <style> block. All of those go here, in <head>.    -->
+  <!-- ================================================== -->
+
+
+
+  <!-- ================================================== -->
+  <!-- (END CX AGENT STUDIO HEAD SNIPPET)                 -->
+  <!-- ================================================== -->
+
+  <style>
+    :root {
+      --color-primary: #1F3A2E;
+      --color-primary-dark: #131F1A;
+      --color-primary-hover: #2D5440;
+      --color-accent: #B8543A;
+      --color-accent-dark: #9F4530;
+      --color-bg: #F5F1E8;
+      --color-surface: #FFFFFF;
+      --color-text: #1A1A1A;
+      --color-text-muted: #6B6B6B;
+      --color-border: #D4CFC0;
+
+      --space-xs: 0.5rem;
+      --space-sm: 1rem;
+      --space-md: 1.5rem;
+      --space-lg: 2.5rem;
+      --space-xl: 4rem;
+
+      --max-width: 1200px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 var(--space-md);
+    }
+
+    /* ===== TICKER BAR ===== */
+    .ticker-bar {
+      background: var(--color-primary-dark);
+      color: rgba(255, 255, 255, 0.88);
+      padding: 0.4rem 0;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+    }
+    .ticker-bar .container {
+      display: flex;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .ticker-item strong {
+      color: var(--color-accent);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      margin-right: 0.4rem;
+    }
+    .ticker-divider {
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    /* ===== HEADER ===== */
+    .site-header {
+      background: var(--color-primary);
+      color: #ffffff;
+      border-bottom: 3px solid var(--color-accent);
+    }
+    .site-header .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: var(--space-sm);
+      padding-bottom: var(--space-sm);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: inherit;
+    }
+    .brand-mark {
+      flex-shrink: 0;
+      display: block;
+    }
+    .brand-name {
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      font-size: 1.05rem;
+      text-transform: uppercase;
+    }
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: var(--space-lg);
+    }
+    .nav-links a {
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.4rem 0;
+      border-bottom: 2px solid transparent;
+      transition: border-color 0.2s ease;
+    }
+    .nav-links a:hover {
+      border-bottom-color: var(--color-accent);
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      background: var(--color-primary);
+      color: #ffffff;
+      padding: calc(var(--space-xl) + 1rem) 0 var(--space-xl);
+      position: relative;
+      overflow: hidden;
+    }
+    /* Subtle diagonal accent */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; right: 0; bottom: 0;
+      width: 45%;
+      background: linear-gradient(115deg,
+        transparent 0%,
+        transparent 55%,
+        rgba(184, 84, 58, 0.10) 55%,
+        rgba(184, 84, 58, 0.10) 60%,
+        transparent 60%,
+        transparent 72%,
+        rgba(184, 84, 58, 0.06) 72%,
+        rgba(184, 84, 58, 0.06) 76%,
+        transparent 76%);
+      pointer-events: none;
+    }
+    .hero .container { position: relative; z-index: 1; }
+    .hero-eyebrow {
+      color: var(--color-accent);
+      font-size: 0.8rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: var(--space-sm);
+    }
+    .hero h1 {
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: var(--space-md);
+      max-width: 800px;
+    }
+    .hero h1 .accent {
+      color: var(--color-accent);
+    }
+    .hero-tagline {
+      font-size: 1.15rem;
+      color: rgba(255, 255, 255, 0.82);
+      margin-bottom: var(--space-lg);
+      max-width: 560px;
+    }
+    .cta {
+      display: inline-block;
+      background: var(--color-accent);
+      color: #ffffff;
+      padding: 0.9rem 2rem;
+      text-decoration: none;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      transition: background-color 0.2s ease, transform 0.1s ease;
+    }
+    .cta:hover { background: var(--color-accent-dark); }
+    .cta:active { transform: translateY(1px); }
+
+    /* ===== CONTENT ===== */
+    .content {
+      padding: var(--space-xl) 0;
+    }
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-md);
+    }
+    .content-block {
+      background: var(--color-surface);
+      padding: var(--space-md);
+      border-top: 3px solid var(--color-primary);
+    }
+    .content-block h2 {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-primary);
+      margin-bottom: var(--space-md);
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    /* News list */
+    .news-list { list-style: none; }
+    .news-list li {
+      padding: var(--space-sm) 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .news-list li:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    .news-list li:first-child { padding-top: 0; }
+    .news-headline {
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 0.25rem;
+      display: block;
+      color: var(--color-text);
+      line-height: 1.4;
+    }
+    .news-meta {
+      font-size: 0.7rem;
+      color: var(--color-text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    /* Schedule list */
+    .schedule-list { list-style: none; }
+    .schedule-list li {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: var(--space-sm);
+      align-items: center;
+      padding: var(--space-sm) 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .schedule-list li:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    .schedule-list li:first-child { padding-top: 0; }
+    .game-info { min-width: 0; }
+    .game-date {
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-text);
+      margin-bottom: 0.15rem;
+    }
+    .game-opponent {
+      font-size: 0.85rem;
+      color: var(--color-text-muted);
+    }
+    .game-time {
+      font-weight: 700;
+      color: var(--color-accent);
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+    }
+
+    /* Front office */
+    .front-office-message {
+      font-size: 0.95rem;
+      line-height: 1.65;
+      margin-bottom: var(--space-md);
+      color: var(--color-text);
+    }
+    .front-office-byline {
+      font-size: 0.75rem;
+      color: var(--color-text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 600;
+      padding-top: var(--space-sm);
+      border-top: 1px solid var(--color-border);
+    }
+
+    /* ===== FOOTER ===== */
+    .site-footer {
+      background: var(--color-primary-dark);
+      color: rgba(255, 255, 255, 0.65);
+      padding: var(--space-lg) 0;
+    }
+    .site-footer .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--space-md);
+    }
+    .footer-links {
+      list-style: none;
+      display: flex;
+      gap: var(--space-md);
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.65);
+      text-decoration: none;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+    .footer-links a:hover { color: var(--color-accent); }
+    .footer-copy {
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .content-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .ticker-bar .container { gap: 0.6rem; }
+      .ticker-divider { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top stat ticker -->
+  <div class="ticker-bar">
+    <div class="container">
+      <span class="ticker-item"><strong>LAST</strong> W 6&ndash;3 vs CRO</span>
+      <span class="ticker-divider">&middot;</span>
+      <span class="ticker-item"><strong>NEXT</strong> Fri 7:05 PM vs RIV</span>
+      <span class="ticker-divider">&middot;</span>
+      <span class="ticker-item"><strong>RECORD</strong> 67&ndash;43</span>
+      <span class="ticker-divider">&middot;</span>
+      <span class="ticker-item"><strong>STREAK</strong> W6</span>
+    </div>
+  </div>
+
+  <!-- Main header / nav -->
+  <header class="site-header">
+    <div class="container">
+      <a href="#" class="brand" aria-label="Race to October home">
+        <svg class="brand-mark" width="34" height="34" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="18" cy="18" r="15" fill="#F5F1E8" stroke="#131F1A" stroke-width="1.4"/>
+          <path d="M 7.5 9 Q 17 18 7.5 27" stroke="#B8543A" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+          <path d="M 28.5 9 Q 19 18 28.5 27" stroke="#B8543A" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+        </svg>
+        <span class="brand-name">Race to October</span>
+      </a>
+      <nav aria-label="Main">
+        <ul class="nav-links">
+          <li><a href="#">Schedule</a></li>
+          <li><a href="#">Roster</a></li>
+          <li><a href="#">News</a></li>
+          <li><a href="#">Tickets</a></li>
+          <li><a href="#">Shop</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container">
+        <p class="hero-eyebrow">2026 Season &middot; Trade Deadline Approaches</p>
+        <h1>Your Team. Your Season.<br><span class="accent">The Race is On.</span></h1>
+        <p class="hero-tagline">Every pitch, every play, every step closer to October. Follow the road from the deadline to the postseason.</p>
+        <a href="#" class="cta">View the Schedule</a>
+      </div>
+    </section>
+
+    <!-- Content blocks -->
+    <section class="content">
+      <div class="container">
+        <div class="content-grid">
+
+          <!-- Latest News -->
+          <article class="content-block">
+            <h2>Latest News</h2>
+            <ul class="news-list">
+              <li>
+                <span class="news-headline">Late Rally Extends Win Streak to Six</span>
+                <span class="news-meta">2 hours ago</span>
+              </li>
+              <li>
+                <span class="news-headline">Pitching Rotation Set for Weekend Series at Home</span>
+                <span class="news-meta">Yesterday</span>
+              </li>
+              <li>
+                <span class="news-headline">Top Prospect Called Up Ahead of Trade Deadline</span>
+                <span class="news-meta">2 days ago</span>
+              </li>
+              <li>
+                <span class="news-headline">Manager on Bullpen Depth: &ldquo;We&rsquo;re in a Good Spot.&rdquo;</span>
+                <span class="news-meta">3 days ago</span>
+              </li>
+            </ul>
+          </article>
+
+          <!-- Upcoming Home Games -->
+          <article class="content-block">
+            <h2>Upcoming Home Games</h2>
+            <ul class="schedule-list">
+              <li>
+                <div class="game-info">
+                  <div class="game-date">Fri &middot; Aug 8</div>
+                  <div class="game-opponent">vs. Riverside Robins</div>
+                </div>
+                <div class="game-time">7:05 PM</div>
+              </li>
+              <li>
+                <div class="game-info">
+                  <div class="game-date">Sat &middot; Aug 9</div>
+                  <div class="game-opponent">vs. Riverside Robins</div>
+                </div>
+                <div class="game-time">1:35 PM</div>
+              </li>
+              <li>
+                <div class="game-info">
+                  <div class="game-date">Sun &middot; Aug 10</div>
+                  <div class="game-opponent">vs. Riverside Robins</div>
+                </div>
+                <div class="game-time">1:35 PM</div>
+              </li>
+              <li>
+                <div class="game-info">
+                  <div class="game-date">Tue &middot; Aug 12</div>
+                  <div class="game-opponent">vs. Lakeshore Lumberjacks</div>
+                </div>
+                <div class="game-time">7:05 PM</div>
+              </li>
+            </ul>
+          </article>
+
+          <!-- From the Front Office -->
+          <article class="content-block">
+            <h2>From the Front Office</h2>
+            <p class="front-office-message">
+              With the trade deadline approaching, our front office is working around the clock to evaluate every opportunity to strengthen this club for the second half. We&rsquo;ve been honest with our supporters about what this season means: a real shot at October. Expect us to be active, deliberate, and focused on the long-term health of the organization.
+            </p>
+            <p class="front-office-byline">&mdash; The Front Office</p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <p class="footer-copy">&copy; 2026 Race to October. All rights reserved.</p>
+      <ul class="footer-links">
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Terms</a></li>
+        <li><a href="#">Privacy</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <!-- ================================================== -->
+  <!-- PASTE CX AGENT STUDIO BODY SNIPPET BELOW HERE      -->
+  <!--                                                    -->
+  <!-- This is the SECOND of two paste points. The CX     -->
+  <!-- Studio console gives you a <script> block that     -->
+  <!-- calls chatSdk.registerContext(), plus the          -->
+  <!-- <chat-messenger> custom element with its           -->
+  <!-- <chat-messenger-chat-bubble> child. Both go here,  -->
+  <!-- right before </body>.                              -->
+  <!--                                                    -->
+  <!-- The widget handles its own positioning &mdash; the page  -->
+  <!-- CSS does not reserve any space for it.             -->
+  <!-- ================================================== -->
+
+
+
+  <!-- ================================================== -->
+  <!-- (END CX AGENT STUDIO BODY SNIPPET)                 -->
+  <!-- ================================================== -->
+
+</body>
+</html>

@@ -27,29 +27,7 @@ FROM `mlb_race_to_october.teams`
 WHERE yearID BETWEEN 1994 AND 2024;
 
 -- =====================================================================
--- Step 2: Evaluate on the 2025 holdout
--- =====================================================================
-
-SELECT *
-FROM ML.EVALUATE(
-  MODEL `mlb_race_to_october.playoff_probability`,
-  (
-    SELECT
-      COALESCE(won_division, FALSE)
-        OR COALESCE(won_wild_card, FALSE)
-        OR COALESCE(won_league, FALSE)
-        OR COALESCE(won_world_series, FALSE)
-        AS played_postseason,
-      wins / games AS winning_pct,
-      runs_scored - runs_allowed AS run_differential,
-      earned_run_avg
-    FROM `mlb_race_to_october.teams`
-    WHERE yearID = 2025
-  )
-);
-
--- =====================================================================
--- Step 3: Per-team 2025 predictions (for sanity-checking against memory)
+-- Step 2: Per-team 2025 predictions (for sanity-checking against memory)
 -- =====================================================================
 
 SELECT
@@ -77,3 +55,24 @@ FROM ML.PREDICT(
   )
 )
 ORDER BY playoff_probability DESC;
+
+
+-- =====================================================================
+-- Step 3: Show every 2025 team's record
+-- =====================================================================
+
+SELECT
+  team_name AS team,
+  wins,
+  losses,
+  ROUND(wins / games, 3) AS winning_pct,
+  runs_scored,
+  runs_allowed,
+  runs_scored - runs_allowed AS run_differential,
+  COALESCE(won_division, FALSE)
+    OR COALESCE(won_wild_card, FALSE)
+    OR COALESCE(won_league, FALSE)
+    OR COALESCE(won_world_series, FALSE) AS made_postseason
+FROM `mlb_race_to_october.teams`
+WHERE yearID = 2025
+ORDER BY run_differential DESC;
