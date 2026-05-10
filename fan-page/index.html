@@ -14,11 +14,8 @@
   <!-- <style> block. All of those go here, in <head>.    -->
   <!-- ================================================== -->
 
-<script defer
-  src="https://www.gstatic.com/chat-messenger/sdk/prod/v1.16/chat-messenger.js">
-</script>
-<link rel="stylesheet" href="https://www.gstatic.com/chat-messenger/sdk/prod/v1.16/themes/chat-messenger-default.css">
-<link rel="stylesheet" href="https://www.gstatic.com/chat-messenger/sdk/prod/v1.16/themes/chat-messenger-layout.css">
+
+
 
   <!-- ================================================== -->
   <!-- (END CX AGENT STUDIO HEAD SNIPPET)                 -->
@@ -351,6 +348,15 @@
       .ticker-bar .container { gap: 0.6rem; }
       .ticker-divider { display: none; }
     }
+
+      chat-messenger {
+        position: fixed;
+        bottom: 16px;
+        right: 16px;
+        width: 64px;
+        height: 64px;
+        z-index: 999;
+      }
   </style>
 </head>
 <body>
@@ -506,44 +512,8 @@
   <!-- CSS does not reserve any space for it.             -->
   <!-- ================================================== -->
 
-<script>
-    window.addEventListener("chat-messenger-loaded", () => {
-      chatSdk.registerContext(
-        chatSdk.prebuilts.ces.createContext({
-          deploymentName: "projects/900701262359/locations/us/apps/c17fc34d-4888-4208-a181-17b93d9dc9b4/deployments/0d9bfe8c-97a0-4306-a36d-36c2c5ddf9fc",
-          tokenBroker: {
-            enableTokenBroker: true,
-            enableRecaptcha: false
-          }
-        }),
-      );
-    });
-</script>
-<!-- Update the url-allowlist attribute with a comma-separated list of origins allowed to render images -->
-<chat-messenger
-  url-allowlist="*"
->
 
-  <chat-messenger-container
-    chat-title="Nice title here"
-    chat-title-icon="https://gstatic.com/dialogflow-console/common/assets/ccai-favicons/conversational_agents.png"
-    enable-file-upload
-  >
-    <chat-reset-session-button
-      slot="titlebar-actions"
-      title-text="Start new chat"
-    ></chat-reset-session-button>
-    <chat-toggle-dialog-button
-      slot="titlebar-actions"
-      title-text-expanded="Collapse"
-      title-text-collapsed="Expand"
-    ></chat-toggle-dialog-button>
-    <chat-messenger-close-button
-      slot="titlebar-actions"
-      title-text="Close"
-    ></chat-messenger-close-button>
-  </chat-messenger-container>
-</chat-messenger>
+  
 
   <!-- ================================================== -->
   <!-- (END CX AGENT STUDIO BODY SNIPPET)                 -->
