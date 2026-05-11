@@ -6,6 +6,8 @@ gets exercised by `adk web` from the parent directory.
 
 import os
 
+os.environ["GOOGLE_CLOUD_LOCATION"] = "global"
+
 from dotenv import load_dotenv
 import google.auth
 from google.adk.agents import Agent
