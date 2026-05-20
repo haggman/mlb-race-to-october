@@ -533,10 +533,119 @@ def get_team_roster(team_id: int) -> Dict[str, Any]:
     return roster
 
 
+# --- League standings (TODO 2: implement this function) ---------------------
+
+def get_standings(season: Optional[int] = None) -> Dict[str, Any]:
+    """Get current MLB standings across all divisions, organized by league.
+
+    Use this for "what are the AL East standings" / "show me the wild card
+    race" — questions where the user wants to see multiple teams' records
+    together. For a single team's standing, `get_team_info` returns the
+    same data plus team metadata in one call.
+
+    Auto-falls-back to the prior year during preseason.
+
+    Args:
+        season: Optional season year. If omitted, auto-detects.
+
+    Returns:
+        Dict with `season`, `is_preseason`, and `divisions` (a list of
+        dicts each with `league`, `division`, and `teams`). Each team
+        entry has `team_id`, `name`, `wins`, `losses`, `pct`,
+        `division_rank`, `league_rank`, and `games_back`.
+    """
+    season_info = _get_season_info()
+    query_season = season if season is not None else season_info["effective_season"]
+
+    result: Dict[str, Any] = {
+        "season": query_season,
+        "is_preseason": season_info["is_preseason"],
+        "divisions": [],
+    }
+
+    if season_info["is_preseason"] and season is None:
+        result["season_note"] = (
+            f"Showing {query_season} standings "
+            f"(the {season_info['current_year']} season hasn't started yet)"
+        )
+
+    # TODO 2: Fetch and parse the MLB standings.
+    #
+    # Replace the raise statement below with code that:
+    #
+    # 1. Calls the /api/v1/standings endpoint via _make_api_call() with:
+    #        leagueId:        "103,104"        # AL=103, NL=104
+    #        season:          query_season
+    #        standingsTypes:  "regularSeason"
+    #        hydrate:         "team"
+    #
+    # 2. Returns the response immediately if it contains an "error" key.
+    #
+    # 3. Walks the response's "records" array — each entry is one division.
+    #    Each record has:
+    #        - division.id, division.name        (e.g. "American League East")
+    #        - league.id                         (103=AL, 104=NL)
+    #        - teamRecords[]                     list of team standings
+    #
+    #    Each entry in teamRecords[] has:
+    #        - team.id, team.name
+    #        - wins, losses, winningPercentage
+    #        - divisionRank, leagueRank, gamesBack
+    #
+    #    See get_team_info() above (around line 380) for a working
+    #    example of consuming this same endpoint.
+    #
+    # 4. For each record, builds a division dict like:
+    #        {
+    #            "league":   "AL" if league_id == 103 else "NL",
+    #            "division": division name,
+    #            "teams":    [list of {team_id, name, wins, losses, pct,
+    #                                  division_rank, league_rank, games_back}],
+    #        }
+    #    and appends it to result["divisions"].
+    #
+    # 5. Finally, returns result.
+
+    data = _make_api_call(
+        "/api/v1/standings",
+        params={
+            "leagueId": "103,104",
+            "season": query_season,
+            "standingsTypes": "regularSeason",
+            "hydrate": "team",
+        },
+    )
+    if "error" in data:
+        return data
+
+    for record in data.get("records", []):
+        league_id = record.get("league", {}).get("id")
+        division_name = record.get("division", {}).get("name", "")
+        teams = []
+        for team_record in record.get("teamRecords", []):
+            teams.append({
+                "team_id": team_record.get("team", {}).get("id"),
+                "name": team_record.get("team", {}).get("name", ""),
+                "wins": team_record.get("wins", 0),
+                "losses": team_record.get("losses", 0),
+                "pct": team_record.get("winningPercentage", ".000"),
+                "division_rank": team_record.get("divisionRank", "?"),
+                "league_rank": team_record.get("leagueRank", "?"),
+                "games_back": team_record.get("gamesBack", "?"),
+            })
+        result["divisions"].append({
+            "league": "AL" if league_id == 103 else "NL",
+            "division": division_name,
+            "teams": teams,
+        })
+
+    return result
+
 __all__ = [
     "search_player",
     "search_team",
     "get_player_stats",
     "get_team_info",
     "get_team_roster",
+    "get_standings",
 ]

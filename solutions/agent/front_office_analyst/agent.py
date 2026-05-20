@@ -6,13 +6,43 @@ gets exercised by `adk web` from the parent directory.
 
 import os
 
+os.environ["GOOGLE_CLOUD_LOCATION"] = "global"
+
 from dotenv import load_dotenv
 import google.auth
 from google.adk.agents import Agent
 from google.adk.tools.bigquery import BigQueryCredentialsConfig, BigQueryToolset
 from google.adk.tools.bigquery.config import BigQueryToolConfig, WriteMode
+from google.genai import types
 
 from .prompts import get_agent_instructions
+
+# ============================================================================
+# Enable Provisioned Throughput (where applicable) and Exponential Backoff
+# ============================================================================
+shared_config = types.GenerateContentConfig(
+    http_options=types.HttpOptions(
+        api_version="v1",
+        headers={"X-Vertex-AI-LLM-Request-Type": "shared"},
+        retry_options=types.HttpRetryOptions(
+            attempts=10,
+            initial_delay=0.5,      # start fast
+            max_delay=4.0,          # cap each wait at 4s
+            exp_base=2.0,           # doubles until capped
+            jitter=1.0,             # avoid thundering-herd retries
+            http_status_codes=[408, 429, 500, 502, 503, 504],
+        ),
+    ),
+)
+
+# TODO 1: Import the MLB Stats API tools.
+#
+# The starter agent below has access to BigQuery (historical data and the
+# BQML model) but cannot answer current-season questions. The MLB Stats
+# API tools live in front_office_analyst/tools/__init__.py and are
+# exported as MLB_STATS_API_TOOLS. Uncomment the line below to make them
+# available here:
+#
 from .tools import MLB_STATS_API_TOOLS
 
 # Load .env if present. In Cloud Shell, students typically `export` env vars
@@ -46,6 +76,7 @@ bigquery_toolset = BigQueryToolset(
 root_agent = Agent(
     model=MODEL,
     name="front_office_analyst",
+    generate_content_config=shared_config,
     description=(
         "Data analyst for an MLB front office during the trade deadline. "
         "Answers analytical, predictive, and current-state questions by "
@@ -53,5 +84,13 @@ root_agent = Agent(
         "Stats API calls."
     ),
     instruction=get_agent_instructions(PROJECT_ID, BQ_DATASET),
+    # TODO 1: Add the MLB Stats API tools to the agent's tool list.
+    #
+    # Once you've uncommented the import above, change the line below to:
+    #
+    #     tools=[bigquery_toolset, *MLB_STATS_API_TOOLS],
+    #
+    # The * unpacks the list of FunctionTool instances so each one is
+    # registered individually with the agent.
     tools=[bigquery_toolset, *MLB_STATS_API_TOOLS],
 )

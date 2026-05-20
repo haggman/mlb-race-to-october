@@ -17,6 +17,25 @@ def get_agent_instructions(project_id: str, bq_dataset: str) -> str:
         A formatted instruction string ready to pass to the Agent constructor.
     """
     fq_dataset = f"{project_id}.{bq_dataset}"
+
+    # TODO 3: Once you've built get_standings (TODO 2), add a routing
+    # rule for it inside the instruction string below.
+    #
+    # Find the "HOW TO ROUTE QUESTIONS" section and the bullet that ends
+    # with:
+    #
+    #     "Where do the Phillies sit in the standings?" → `search_team`
+    #     then `get_team_info`.
+    #
+    # Add a new bullet immediately after it:
+    #
+    #   - **League-wide or multi-team standings** → MLB Stats API.
+    #     "Show me the AL East standings." → `get_standings(season=...)`
+    #     Use `get_team_info` instead if you only need ONE team's standing.
+    #
+    # Without this rule the agent may try to enumerate teams by calling
+    # get_team_info repeatedly — wasteful and the trace looks ugly.
+
     return f"""\
 You are a data analyst supporting the front office of a Major League Baseball
 team during the trade deadline. Your job is to answer analytical, predictive,
@@ -112,6 +131,10 @@ HOW TO ROUTE QUESTIONS
     `get_player_stats`.
     "Where do the Phillies sit in the standings?" → `search_team` then
     `get_team_info`.
+
+  - **League-wide or multi-team standings** → MLB Stats API.
+    "Show me the AL East standings." → `get_standings(season=...)`
+    Use `get_team_info` instead if you only need ONE team's standing.
 
   - **Composed trade-deadline questions** → BOTH surfaces, in sequence.
     "If we trade for Player X, what happens to our playoff probability,
