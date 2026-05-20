@@ -51,7 +51,7 @@ load_dotenv()
 
 PROJECT_ID = os.environ.get("GOOGLE_CLOUD_PROJECT")
 BQ_DATASET = os.environ.get("BQ_DATASET", "mlb_race_to_october")
-MODEL = os.environ.get("AGENT_MODEL", "gemini-3-flash-preview")
+MODEL = os.environ.get("AGENT_MODEL", "gemini-3.5-flash")
 
 if not PROJECT_ID:
     raise RuntimeError(
