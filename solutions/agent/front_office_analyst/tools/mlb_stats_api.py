@@ -223,8 +223,11 @@ def get_player_stats(
 
     Args:
         player_id: MLB integer player ID (get this from `search_player`).
-        season: Optional season year. If omitted, auto-detects (uses prior
-            year during preseason).
+        season: Optional four-digit year. OMIT this for current/this-season
+            data — the tool fills in the current season automatically (and
+            falls back to the most recent completed season in the offseason).
+            Only pass it when the user explicitly names a past year. Do not
+            infer or guess the current year yourself.
         include: Which stat windows to return. Subset of ["season", "career",
             "recent"]. Defaults to all three.
         groups: Which stat groups. Subset of ["hitting", "pitching"].
@@ -356,7 +359,11 @@ def get_team_info(team_id: int, season: Optional[int] = None) -> Dict[str, Any]:
 
     Args:
         team_id: MLB integer team ID (get this from `search_team`).
-        season: Optional season year. If omitted, auto-detects.
+        season: Optional four-digit year. OMIT this for current/this-season
+            data — the tool fills in the current season automatically (and
+            falls back to the most recent completed season in the offseason).
+            Only pass it when the user explicitly names a past year. Do not
+            infer or guess the current year yourself.
 
     Returns:
         Dict with team metadata (name, league, division, venue), `standings`
@@ -547,9 +554,10 @@ def get_standings(season: Optional[int] = None) -> Dict[str, Any]:
 
     Args:
         season: Optional four-digit year. OMIT this for current/this-season
-            standings — the tool fills in the current season automatically.
-            Only pass it when the user explicitly names a past year. Do not
-            infer or guess the current year yourself.
+            standings — the tool fills in the current season automatically
+            (and falls back to the most recent completed season in the
+            offseason). Only pass it when the user explicitly names a past
+            year. Do not infer or guess the current year yourself.
 
     Returns:
         Dict with `season`, `is_preseason`, and `divisions` (a list of
