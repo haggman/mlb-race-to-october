@@ -30,11 +30,19 @@ def get_agent_instructions(project_id: str, bq_dataset: str) -> str:
     # Add a new bullet immediately after it:
     #
     #   - **League-wide or multi-team standings** → MLB Stats API.
-    #     "Show me the AL East standings." → `get_standings(season=...)`
+    #     "Show me the AL East standings." → `get_standings()` with NO
+    #     season argument — the tool fills in the current season
+    #     automatically. Only pass `season` (e.g. `get_standings(season=2018)`)
+    #     when the user names a specific past year. Never guess the current
+    #     year yourself.
     #     Use `get_team_info` instead if you only need ONE team's standing.
     #
     # Without this rule the agent may try to enumerate teams by calling
-    # get_team_info repeatedly — wasteful and the trace looks ugly.
+    # get_team_info repeatedly — wasteful and the trace looks ugly. And note
+    # the "NO season argument" guidance: get_standings already determines the
+    # current season from the system clock, so if you invite the model to
+    # pass a year it will guess one from its training data and return stale
+    # standings. Let the tool handle the date.
 
     return f"""\
 You are a data analyst supporting the front office of a Major League Baseball
@@ -133,7 +141,10 @@ HOW TO ROUTE QUESTIONS
     `get_team_info`.
 
   - **League-wide or multi-team standings** → MLB Stats API.
-    "Show me the AL East standings." → `get_standings(season=...)`
+    "Show me the AL East standings." → `get_standings()` with NO season
+    argument — the tool fills in the current season automatically. Only
+    pass `season` (e.g. `get_standings(season=2018)`) when the user names
+    a specific past year. Never guess the current year yourself.
     Use `get_team_info` instead if you only need ONE team's standing.
 
   - **Composed trade-deadline questions** → BOTH surfaces, in sequence.
