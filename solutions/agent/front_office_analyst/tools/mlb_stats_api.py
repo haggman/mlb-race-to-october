@@ -546,7 +546,10 @@ def get_standings(season: Optional[int] = None) -> Dict[str, Any]:
     Auto-falls-back to the prior year during preseason.
 
     Args:
-        season: Optional season year. If omitted, auto-detects.
+        season: Optional four-digit year. OMIT this for current/this-season
+            standings — the tool fills in the current season automatically.
+            Only pass it when the user explicitly names a past year. Do not
+            infer or guess the current year yourself.
 
     Returns:
         Dict with `season`, `is_preseason`, and `divisions` (a list of
